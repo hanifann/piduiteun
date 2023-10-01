@@ -1,4 +1,4 @@
-package com.example.verygoodcore.piduiteun
+package com.hanifan.piduiteun
 
 import io.flutter.embedding.android.FlutterActivity
 
