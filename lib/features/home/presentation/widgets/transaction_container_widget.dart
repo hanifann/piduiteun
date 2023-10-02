@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:piduiteun/features/home/domain/entities/category.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
-
-enum Category {food, transportation, entertainment, bills, etc}
 
 class TransactionContainerWidget extends StatelessWidget {
   const TransactionContainerWidget({
@@ -16,7 +15,7 @@ class TransactionContainerWidget extends StatelessWidget {
     super.key,
   });
 
-  final Category category;
+  final ExpanseCategory category;
   final int value;
   final String title;
   final bool isIncome;
@@ -63,17 +62,17 @@ class TransactionContainerWidget extends StatelessWidget {
     );
   }
 
-  IconData categoryToIcons(Category category){
+  IconData categoryToIcons(ExpanseCategory category){
     switch (category) {
-      case Category.food:
+      case ExpanseCategory.food:
         return Symbols.fastfood_rounded;
-      case Category.transportation:
+      case ExpanseCategory.transportation:
         return Symbols.commute_rounded;
-      case Category.bills:
+      case ExpanseCategory.bills:
         return Symbols.payment_rounded;
-      case Category.etc:
+      case ExpanseCategory.etc:
         return Symbols.attach_money_rounded;
-      case Category.entertainment:
+      case ExpanseCategory.entertainment:
         return Symbols.sports_esports_rounded;
     } 
   }
