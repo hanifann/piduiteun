@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
 
 class BottomNavBarView extends StatelessWidget {
@@ -38,15 +39,15 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   static const List<NavigationDestination> navigatorDestination = [
     NavigationDestination(
-      icon: Icon(Icons.home),
+      icon: Icon(Symbols.home_rounded),
       label: 'Beranda',
     ),
     NavigationDestination(
-      icon: Icon(Icons.insights),
+      icon: Icon(Symbols.analytics_rounded),
       label: 'Statistik',
     ),
     NavigationDestination(
-      icon: Icon(Icons.receipt),
+      icon: Icon(Symbols.receipt_long_rounded),
       label: 'Transaksi',
     ),
   ];
@@ -54,9 +55,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title[currentPageIndex]),
-      ),
+      appBar: AppBar(),
       body: body[currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: navigatorDestination,
