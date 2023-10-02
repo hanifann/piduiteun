@@ -14,7 +14,7 @@ class App extends StatelessWidget {
         return MaterialApp.router(
           theme: ThemeData(
             useMaterial3: true,
-            colorSchemeSeed: const Color.fromRGBO(0, 104, 127, 1),
+            colorSchemeSeed: const Color.fromRGBO(45, 107, 39, 1),
             fontFamily: 'Nunito',
             // colorScheme: const ColorScheme(
             //   background: Color.fromRGBO(251, 252, 254, 1), 
