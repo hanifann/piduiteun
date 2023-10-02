@@ -53,7 +53,7 @@ class TransactionContainerWidget extends StatelessWidget {
           text: NumberFormat.currency(
             locale: 'id',
             symbol: 'Rp.',
-            decimalDigits: 0
+            decimalDigits: 0,
           ).format(value),
           size: 14.sp,
           weight: FontWeight.w500,
