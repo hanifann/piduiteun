@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
 
@@ -62,7 +63,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          
+          context.pushNamed('add_data');
         },
         elevation: 2,
         child: const Icon(Icons.add),
