@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
 
 class InExContainerDataWidget extends StatelessWidget {
@@ -11,7 +12,7 @@ class InExContainerDataWidget extends StatelessWidget {
   });
 
   final String title;
-  final String money;
+  final int money;
   final bool isIncome;
 
   @override
@@ -47,7 +48,11 @@ class InExContainerDataWidget extends StatelessWidget {
                 size: 14.sp,
               ),
               CustomTextWidget(
-                text: 'Rp.$money',
+                text: NumberFormat.currency(
+                  locale: 'id',
+                  symbol: 'Rp.',
+                  decimalDigits: 0,
+                ).format(money),
                 weight: FontWeight.w600,
                 size: 14.sp,
               ),
