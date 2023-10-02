@@ -54,7 +54,9 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(title[currentPageIndex]),
+      ),
       body: body[currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: navigatorDestination,
