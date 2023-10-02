@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:piduiteun/features/home/domain/entities/category.dart';
+import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
+import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/in_ex_container_data_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/transaction_container_widget.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
-
-enum SegmentedChoice{pengeluaran, pemasukan}
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -38,7 +38,14 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 24.h),
           summaryRowWidget(),
           SizedBox(height: 24.h,),
-          summarySegmentedBtnWidget(),
+          CategorySegmentedBtnWidget(
+            selectedValue: <SegmentedChoice>{selectedSegmented},
+            onSelectionChanged: (value) {
+              setState(() {
+                selectedSegmented = value.first;
+              });
+            },
+          ),
           SizedBox(height: 16.h,),
           lastTransTextWidget(),
           SizedBox(height: 8.h),
@@ -91,35 +98,6 @@ class _HomePageState extends State<HomePage> {
       text: 'Transaksi terakhir',
       size: 16.sp,
       weight: FontWeight.w500,
-    );
-  }
-
-  SegmentedButton<SegmentedChoice> summarySegmentedBtnWidget() {
-    return SegmentedButton<SegmentedChoice>(
-      segments: const [
-        ButtonSegment(
-          value: SegmentedChoice.pengeluaran,
-          label: Text('Pengeluaran'),
-        ),
-        ButtonSegment(
-          value:SegmentedChoice.pemasukan,
-          label: Text('Pemasukan'),
-        ),
-      ], 
-      showSelectedIcon: false,
-      selected: <SegmentedChoice>{selectedSegmented},
-      onSelectionChanged: (Set<SegmentedChoice> newSelection) {
-        setState(() {
-          selectedSegmented = newSelection.first;
-        });
-      },
-      style: ButtonStyle(
-        shape: MaterialStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-        ),
-      ),
     );
   }
 
