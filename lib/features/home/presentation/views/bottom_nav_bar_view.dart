@@ -31,12 +31,6 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     ),
   ];
 
-  static const List<String> title = <String>[
-    'Beranda',
-    'Statistik',
-    'Transaksi',
-  ];
-
   static const List<NavigationDestination> navigatorDestination = [
     NavigationDestination(
       icon: Icon(Symbols.home_rounded),
