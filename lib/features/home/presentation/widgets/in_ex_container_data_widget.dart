@@ -25,18 +25,11 @@ class InExContainerDataWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(4.r),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.r),
-              color: Theme.of(context).colorScheme.secondaryContainer,
-            ),
-            child: Icon(
-              isIncome ? 
-              Icons.arrow_upward_rounded : 
-              Icons.arrow_downward_rounded,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
+          Icon(
+            isIncome ? 
+            Icons.arrow_upward_rounded : 
+            Icons.arrow_downward_rounded,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
           SizedBox(width: 16.w,),
           Column(
