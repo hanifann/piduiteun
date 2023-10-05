@@ -63,17 +63,19 @@ class TransactionContainerWidget extends StatelessWidget {
   }
 
   IconData categoryToIcons(ExpanseCategory category){
-    switch (category) {
-      case ExpanseCategory.food:
+    switch (category.name) {
+      case 'food':
         return Symbols.fastfood_rounded;
-      case ExpanseCategory.transportation:
+      case 'transportation':
         return Symbols.commute_rounded;
-      case ExpanseCategory.bills:
+      case 'bills':
         return Symbols.payment_rounded;
-      case ExpanseCategory.etc:
+      case 'etc':
         return Symbols.attach_money_rounded;
-      case ExpanseCategory.entertainment:
+      case 'entertainment':
         return Symbols.sports_esports_rounded;
-    } 
+      default:
+        return Symbols.savings_rounded;
+    }
   }
 }
