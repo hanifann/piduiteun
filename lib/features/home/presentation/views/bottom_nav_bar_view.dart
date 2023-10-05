@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
+import 'package:piduiteun/injection_container.dart';
 
 class BottomNavBarView extends StatelessWidget {
   const BottomNavBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const BottomNavBarPage();
+    return BlocProvider(
+      create: (context) => sl<HomeBloc>(),
+      child: const BottomNavBarPage(),
+    );
   }
 }
 
@@ -63,7 +69,10 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.pushNamed('add_data');
+          context.pushNamed(
+            'add_data',
+            extra: context.read<HomeBloc>(),
+          );
         },
         elevation: 2,
         child: const Icon(Icons.add),
