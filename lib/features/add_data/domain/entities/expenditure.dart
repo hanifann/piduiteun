@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'expenditure.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class Expenditure extends Equatable {
   const Expenditure({
     required this.expenditure, 
@@ -14,7 +14,7 @@ class Expenditure extends Equatable {
   });
 
   @HiveField(0)
-  final int expenditure;
+  final double expenditure;
   @HiveField(1)
   final DateTime dateTime;
   @HiveField(2)
