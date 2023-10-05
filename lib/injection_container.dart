@@ -15,6 +15,8 @@ import 'package:piduiteun/features/home/domain/repositories/home_repository.dart
 import 'package:piduiteun/features/home/domain/usecases/get_ex_data_usecase.dart';
 import 'package:piduiteun/features/home/domain/usecases/get_in_data_usecase.dart';
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
+import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
+import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -47,6 +49,9 @@ Future<void> init() async {
     getExDataUseCase: sl(), 
     getInDataUseCase: sl(),
   ),);
+  //cubit
+  sl.registerFactory(SummaryCubit.new);
+  sl.registerFactory(InExSummaryCubit.new);
   //usecases
   sl.registerLazySingleton(() => GetExDataUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetInDataUseCase(repository: sl()));
