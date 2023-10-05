@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:piduiteun/features/add_data/presentation/widgets/textfield_with_title_widget.dart';
+import 'package:piduiteun/features/home/domain/entities/category.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
@@ -30,6 +31,8 @@ class _AddDataPageState extends State<AddDataPage> {
   final dateEditingController = TextEditingController();
   final timeEditingController = TextEditingController();
 
+  String? chipValue;
+
   @override
   void initState() {
     dateEditingController.text = 
@@ -56,6 +59,7 @@ class _AddDataPageState extends State<AddDataPage> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 24.h),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 1.sw,
@@ -67,11 +71,43 @@ class _AddDataPageState extends State<AddDataPage> {
             nominalTextfieldWidget(),
             SizedBox(height: 16.h,),
             dateAndTimeRowWidget(context),
+            SizedBox(height: 16.h,),
+            kategoriTextWidget(),
+            categoryWrapWidget(context),
             const Spacer(),
             addInExBtnWidget(context),
           ],
         ),
       ),
+    );
+  }
+
+  Wrap categoryWrapWidget(BuildContext context) {
+    return Wrap(
+      spacing: 8.w,
+      children: ExpanseCategory.values.map((e) {
+        return ChoiceChip(
+          selectedColor: Theme.of(context).colorScheme.primaryContainer,
+          backgroundColor: Theme.of(context)
+            .colorScheme.secondaryContainer,
+          side: BorderSide.none,
+          label: Text(e.name),
+          selected: chipValue == e.name,
+          onSelected: (value) {
+            setState(() {
+              chipValue = value ? e.name : null;
+            });
+          },
+        );
+      }).toList(),
+    );
+  }
+
+  CustomTextWidget kategoriTextWidget() {
+    return CustomTextWidget(
+      text: 'Kategori',
+      size: 14.sp,
+      weight: FontWeight.w500,
     );
   }
 
@@ -130,25 +166,31 @@ class _AddDataPageState extends State<AddDataPage> {
     );
   }
 
-  ElevatedButton addInExBtnWidget(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        
-      },
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
+  Widget addInExBtnWidget(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 1.sw,
+        height: 48.h,
+        child: ElevatedButton(
+          onPressed: () {
+            
+          },
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          ), 
+          child: CustomTextWidget(
+            text: selectedValue == SegmentedChoice.pengeluaran ? 
+            'Tambah pengeluaran' :
+            'Tambah pemasukan',
+            size: 14.sp,
+            weight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
         ),
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-      ), 
-      child: CustomTextWidget(
-        text: selectedValue == SegmentedChoice.pengeluaran ? 
-        'Tambah pengeluaran' :
-        'Tambah pemasukan',
-        size: 14.sp,
-        weight: FontWeight.w500,
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
