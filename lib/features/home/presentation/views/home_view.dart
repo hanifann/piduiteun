@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:piduiteun/features/home/domain/entities/category.dart';
+import 'package:piduiteun/features/add_data/domain/entities/expenditure.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
+import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/in_ex_container_data_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/transaction_container_widget.dart';
@@ -38,58 +40,62 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 24.h),
           summaryRowWidget(),
           SizedBox(height: 24.h,),
-          CategorySegmentedBtnWidget(
-            selectedValue: <SegmentedChoice>{selectedSegmented},
-            onSelectionChanged: (value) {
-              setState(() {
-                selectedSegmented = value.first;
-              });
-            },
-          ),
+          catagorySegmentedBtnWidget(),
           SizedBox(height: 16.h,),
           lastTransTextWidget(),
           SizedBox(height: 8.h),
-          if(selectedSegmented == SegmentedChoice.pengeluaran)
-            expenditureListViewWidget()
-          else
-            incomeListViewWidget(),
+          inExBlocBuilderWidget(),  
         ],
       ),
     );
   }
 
-  ListView incomeListViewWidget() {
-    return ListView.separated(
-      shrinkWrap: true,
-      primary: false,
-      itemBuilder: (context, index) {
-        return TransactionContainerWidget(
-          category: ExpanseCategory.etc, 
-          value: 500000,
-          title: 'Gaji bulanan',
-          dateTime: DateTime.now(),
-          isIncome: false,
-        );
-      }, 
-      separatorBuilder: (_,__) => SizedBox(height: 12.h,), 
-      itemCount: 5,
+  BlocBuilder<HomeBloc, HomeState> inExBlocBuilderWidget() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if(state is HomeLoaded){
+          return expenditureListViewWidget(state.expenditure);
+        } else if (state is HomeFailed){
+          return const Center(
+            child: Text('Belum ada data'),
+          );
+        } else {
+          return const CircularProgressIndicator.adaptive();
+        }
+      },
     );
   }
 
-  ListView expenditureListViewWidget() {
+  CategorySegmentedBtnWidget catagorySegmentedBtnWidget() {
+    return CategorySegmentedBtnWidget(
+      selectedValue: <SegmentedChoice>{selectedSegmented},
+      onSelectionChanged: (value) {
+        setState(() {
+          selectedSegmented = value.first;
+        });
+        if(selectedSegmented == SegmentedChoice.pengeluaran){
+          context.read<HomeBloc>().add(GetExDataEvent());
+        } else {
+          context.read<HomeBloc>().add(GetInDataEvent());
+        }
+      },
+    );
+  }
+
+  ListView expenditureListViewWidget(List<Expenditure> expenditure) {
     return ListView.separated(
       shrinkWrap: true,
       primary: false,
       itemBuilder: (context, index) {
         return TransactionContainerWidget(
-          category: ExpanseCategory.transportation, 
-          value: 15000,
-          title: 'Ayam geprek',
-          dateTime: DateTime.now(),
+          category: expenditure[index].tag, 
+          value: expenditure[index].expenditure,
+          title: expenditure[index].information,
+          dateTime: expenditure[index].dateTime,
         );
       }, 
       separatorBuilder: (_,__) => SizedBox(height: 12.h,), 
-      itemCount: 5,
+      itemCount: expenditure.length <= 10 ? expenditure.length : 10,
     );
   }
 
