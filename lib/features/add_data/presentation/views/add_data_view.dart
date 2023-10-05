@@ -270,6 +270,23 @@ class _AddDataPageState extends State<AddDataPage> {
         height: 48.h,
         child: ElevatedButton(
           onPressed: () {
+            if(chipValue == null){
+              showDialog<String>(
+                context: context, 
+                builder: (_){
+                  return AlertDialog(
+                    title: const Text('Terjadi kesalahan'),
+                    content: const Text('Anda belum memilih kategori'),
+                    actions: [
+                      GestureDetector(
+                        onTap: ()=> context.pop(),
+                        child: const Text('Kembali'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
             if(formKey.currentState!.validate()){
               if(selectedValue == SegmentedChoice.pengeluaran){
                 context.read<AddDataBloc>().add(
