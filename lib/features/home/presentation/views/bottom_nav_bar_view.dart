@@ -12,7 +12,7 @@ class BottomNavBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<HomeBloc>(),
+      create: (context) => sl<HomeBloc>()..add(GetExDataEvent()),
       child: const BottomNavBarPage(),
     );
   }
