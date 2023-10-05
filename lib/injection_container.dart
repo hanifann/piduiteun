@@ -28,13 +28,10 @@ Future<void> init() async {
     () => AddDataRepositoryImpl(localDataSource: sl()),
   );
   //datasources
-  sl.registerLazySingleton(() => AddDataLocalDataSourceImpl(
-    exBox: sl(), inBox: sl(),
+  final exBox = await Hive.openBox<Expenditure>('expenditure');
+  final inBox = await Hive.openBox<Expenditure>('income');
+  sl.registerLazySingleton<AddDataLocalDataSource>(
+  () => AddDataLocalDataSourceImpl(
+    exBox: exBox, inBox: inBox,
   ),);
-
-  //core
-  final exBox = await Hive.openLazyBox<Expenditure>('expenditure');
-  final inBox = await Hive.openLazyBox<Expenditure>('income');
-  sl.registerLazySingleton(() => exBox);
-  sl.registerLazySingleton(() => inBox);
 }
