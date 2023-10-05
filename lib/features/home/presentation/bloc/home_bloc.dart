@@ -51,7 +51,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return b.time.compareTo(a.time);
         });
         emit(HomeLoaded(expenditure: r));
-        emit(HomeLoaded(expenditure: r));
       }
     );
   }
