@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
+import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
+import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
 import 'package:piduiteun/injection_container.dart';
 
@@ -11,8 +13,18 @@ class BottomNavBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<HomeBloc>()..add(GetExDataEvent()),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => sl<HomeBloc>()..add(GetExDataEvent()),
+          ),
+          BlocProvider(
+            create: (context) => sl<SummaryCubit>()..thisMonthSummaryEvent(),
+          ),
+          BlocProvider(
+            create: (context) => sl<InExSummaryCubit>()..inExSummEvent(),
+          ),
+        ],
       child: const BottomNavBarPage(),
     );
   }
