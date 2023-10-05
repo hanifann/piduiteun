@@ -14,7 +14,7 @@ class Expenditure extends Equatable {
   });
 
   @HiveField(0)
-  final double expenditure;
+  final int expenditure;
   @HiveField(1)
   final DateTime dateTime;
   @HiveField(2)
