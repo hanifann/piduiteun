@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:piduiteun/features/home/domain/entities/category.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
 
 class TransactionContainerWidget extends StatelessWidget {
@@ -15,7 +14,7 @@ class TransactionContainerWidget extends StatelessWidget {
     super.key,
   });
 
-  final ExpanseCategory category;
+  final String category;
   final int value;
   final String title;
   final bool isIncome;
@@ -62,8 +61,8 @@ class TransactionContainerWidget extends StatelessWidget {
     );
   }
 
-  IconData categoryToIcons(ExpanseCategory category){
-    switch (category.name) {
+  IconData categoryToIcons(String category){
+    switch (category) {
       case 'food':
         return Symbols.fastfood_rounded;
       case 'transportation':
