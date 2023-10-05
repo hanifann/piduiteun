@@ -1,18 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:piduiteun/features/add_data/domain/entities/expenditure.dart';
 
 part 'in_ex_summary_state.dart';
 
 class InExSummaryCubit extends Cubit<InExSummaryState> {
-  InExSummaryCubit() : super(InExSummaryInitial());
+  InExSummaryCubit(this.income, this.expense) : super(InExSummaryInitial());
 
-  void inExSummEvent(List<Expenditure> income, List<Expenditure> expense){
+  final Box<Expenditure> income;
+  final Box<Expenditure> expense;
+
+  void inExSummEvent(){
     emit(InExSummaryLoading());
-    final inSum = income.fold(
+    final inSum = income.values.fold(
       0, (previousValue, element) => previousValue+element.expenditure,
     );
-    final exSum = income.fold(
+    final exSum = expense.values.fold(
       0, (previousValue, element) => previousValue+element.expenditure,
     );
     emit(InExSummaryLoaded(income: inSum, expenditure: exSum));
