@@ -9,6 +9,12 @@ import 'package:piduiteun/features/add_data/domain/repositories/add_data_reposit
 import 'package:piduiteun/features/add_data/domain/usecases/add_ex_data_usecase.dart';
 import 'package:piduiteun/features/add_data/domain/usecases/add_in_data_usecase.dart';
 import 'package:piduiteun/features/add_data/presentation/bloc/add_data_bloc.dart';
+import 'package:piduiteun/features/home/data/datasources/home_local_datasource.dart';
+import 'package:piduiteun/features/home/data/repositories/home_repository_impl.dart';
+import 'package:piduiteun/features/home/domain/repositories/home_repository.dart';
+import 'package:piduiteun/features/home/domain/usecases/get_ex_data_usecase.dart';
+import 'package:piduiteun/features/home/domain/usecases/get_in_data_usecase.dart';
+import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -34,4 +40,22 @@ Future<void> init() async {
   () => AddDataLocalDataSourceImpl(
     exBox: exBox, inBox: inBox,
   ),);
+
+  //home
+  //bloc
+  sl.registerFactory(() => HomeBloc(
+    getExDataUseCase: sl(), 
+    getInDataUseCase: sl(),
+  ),);
+  //usecases
+  sl.registerLazySingleton(() => GetExDataUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetInDataUseCase(repository: sl()));
+  //repositories
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(localDataSource: sl()),
+  );
+  //datasources
+  sl.registerLazySingleton<HomeLocalDataSource>(
+    () => HomeLocalDataSourceImpl(exBox: exBox, inBox: inBox),
+  );
 }
