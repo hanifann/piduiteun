@@ -9,6 +9,8 @@ import 'package:piduiteun/features/add_data/presentation/widgets/textfield_with_
 import 'package:piduiteun/features/home/domain/entities/category.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
+import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
+import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/injection_container.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
@@ -129,7 +131,10 @@ class _AddDataPageState extends State<AddDataPage> {
             keteranganEditingController.clear();
             chipValue = null;
           });
+          //add event to homeBloc
           context.read<HomeBloc>().add(GetExDataEvent());
+          context.read<SummaryCubit>().thisMonthSummaryEvent();
+          context.read<InExSummaryCubit>().inExSummEvent();
         } else if (state is AddDataFailed){
           showDialog<String>(
             context: context, 
