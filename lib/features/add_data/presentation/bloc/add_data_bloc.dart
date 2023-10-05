@@ -23,6 +23,7 @@ class AddDataBloc extends Bloc<AddDataEvent, AddDataState> {
     AddInDataEvent event,
     Emitter<AddDataState> emit,
   ) async {
+    emit(AddDataInitial());
     final result = await addInDataUseCase(
       AddDataParams(expenditure: event.expenditure),
     );
@@ -37,6 +38,7 @@ class AddDataBloc extends Bloc<AddDataEvent, AddDataState> {
     AddExDataEvent event,
     Emitter<AddDataState> emit,
   ) async {
+    emit(AddDataInitial());
     final result = await addExDataUseCase(
       AddDataParams(expenditure: event.expenditure),
     );
