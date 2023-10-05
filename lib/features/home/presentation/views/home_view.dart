@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  BlocBuilder<InExSummaryCubit, InExSummaryState> inExSummaryBlocBuilderWidget() {
+  BlocBuilder<InExSummaryCubit, InExSummaryState>inExSummaryBlocBuilderWidget(){
     return BlocBuilder<InExSummaryCubit, InExSummaryState>(
       builder: (context, state) {
         if(state is InExSummaryLoaded){
