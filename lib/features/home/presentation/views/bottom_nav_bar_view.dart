@@ -83,7 +83,11 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         onPressed: () {
           context.pushNamed(
             'add_data',
-            extra: context.read<HomeBloc>(),
+            extra:{
+              'homeBloc': context.read<HomeBloc>(),
+              'summaryCubit':  context.read<SummaryCubit>(),
+              'inExSumCubit':  context.read<InExSummaryCubit>(),
+            },
           );
         },
         elevation: 2,
