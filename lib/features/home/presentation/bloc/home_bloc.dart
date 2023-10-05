@@ -30,8 +30,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (l) => emit(HomeFailed(errorMessage: l.message)), 
       (r) {
         r.sort((a, b){
-          b.dateTime.compareTo(a.dateTime);
-          return b.time.compareTo(a.time);
+          b.time.compareTo(a.time);
+          return b.dateTime.compareTo(a.dateTime);
         });
         emit(HomeLoaded(expenditure: r));
       }
@@ -47,8 +47,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (l) => emit(HomeFailed(errorMessage: l.message)), 
       (r) {
         r.sort((a, b){
-          b.dateTime.compareTo(a.dateTime);
-          return b.time.compareTo(a.time);
+          b.time.compareTo(a.time);
+          return b.dateTime.compareTo(a.dateTime);
         });
         emit(HomeLoaded(expenditure: r));
       }
