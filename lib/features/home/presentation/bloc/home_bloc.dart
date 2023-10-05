@@ -28,7 +28,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await getExDataUseCase(NoParams());
     result!.fold(
       (l) => emit(HomeFailed(errorMessage: l.message)), 
-      (r) => emit(HomeLoaded(expenditure: r)),
+      (r) {
+        r.sort((a, b){
+          b.dateTime.compareTo(a.dateTime);
+          return b.time.compareTo(a.time);
+        });
+        emit(HomeLoaded(expenditure: r));
+      }
     );
   }
   Future<void> _onGetInDataEvent(
@@ -39,7 +45,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await getInDataUseCase(NoParams());
     result!.fold(
       (l) => emit(HomeFailed(errorMessage: l.message)), 
-      (r) => emit(HomeLoaded(expenditure: r)),
+      (r) {
+        r.sort((a, b){
+          b.dateTime.compareTo(a.dateTime);
+          return b.time.compareTo(a.time);
+        });
+        emit(HomeLoaded(expenditure: r));
+        emit(HomeLoaded(expenditure: r));
+      }
     );
   }
 }
