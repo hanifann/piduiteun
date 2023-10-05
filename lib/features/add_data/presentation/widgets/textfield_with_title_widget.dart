@@ -63,6 +63,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
             ),
             Flexible(
               child: TextFormField(
+                autocorrect: false,
                 enabled: isEnabled,
                 keyboardType: textInputType,
                 controller: textEditingController,
