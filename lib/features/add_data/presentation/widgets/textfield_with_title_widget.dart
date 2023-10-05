@@ -67,8 +67,9 @@ class TextFieldWithTitleWidget extends StatelessWidget {
                 enabled: isEnabled,
                 keyboardType: textInputType,
                 controller: textEditingController,
-                validator: (value) => value == null ? errorMessage : null,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => value == null || value.isEmpty ? 
+                  errorMessage : 
+                  null,
                 inputFormatters: [
                     if (isCurrency)
                       CurrencyTextInputFormatter(
