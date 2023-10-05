@@ -50,8 +50,8 @@ Future<void> init() async {
     getInDataUseCase: sl(),
   ),);
   //cubit
-  sl.registerFactory(SummaryCubit.new);
-  sl.registerFactory(InExSummaryCubit.new);
+  sl.registerFactory(()=>SummaryCubit(inBox, exBox));
+  sl.registerFactory(()=>InExSummaryCubit(inBox, exBox));
   //usecases
   sl.registerLazySingleton(() => GetExDataUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetInDataUseCase(repository: sl()));
