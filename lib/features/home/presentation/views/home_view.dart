@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:piduiteun/features/add_data/domain/entities/expenditure.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
+import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
+import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/in_ex_container_data_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/transaction_container_widget.dart';
@@ -36,9 +38,9 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         children: [
           thisMonthExpanseTextWidget(context),
-          expanseTextWidget(),
+          summaryBlocBuilderWidget(),
           SizedBox(height: 24.h),
-          summaryRowWidget(),
+          inExSummaryBlocBuilderWidget(),
           SizedBox(height: 24.h,),
           catagorySegmentedBtnWidget(),
           SizedBox(height: 16.h,),
@@ -47,6 +49,30 @@ class _HomePageState extends State<HomePage> {
           inExBlocBuilderWidget(),  
         ],
       ),
+    );
+  }
+
+  BlocBuilder<InExSummaryCubit, InExSummaryState> inExSummaryBlocBuilderWidget() {
+    return BlocBuilder<InExSummaryCubit, InExSummaryState>(
+      builder: (context, state) {
+        if(state is InExSummaryLoaded){
+          return summaryRowWidget(state.income, state.expenditure);
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  BlocBuilder<SummaryCubit, SummaryState> summaryBlocBuilderWidget() {
+    return BlocBuilder<SummaryCubit, SummaryState>(
+      builder: (context, state) {
+        if(state is SummaryLoaded){
+          return expanseTextWidget(state.summary);
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 
@@ -107,33 +133,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Row summaryRowWidget() {
+  Row summaryRowWidget(int income, int expense) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const InExContainerDataWidget(
+        InExContainerDataWidget(
           title: 'Pengeluaran',
-          money: 300000,
+          money: expense,
           isIncome: false,
         ),
         SizedBox(width: 24.w,),
-        const InExContainerDataWidget(
+        InExContainerDataWidget(
           title: 'Pemasukan',
-          money: 5000000,
+          money: income,
           isIncome: true,
         ),
       ],
     );
   }
 
-  Center expanseTextWidget() {
+  Center expanseTextWidget(int summary) {
     return Center(
       child: CustomTextWidget(
         text: NumberFormat.currency(
           locale: 'id',
           symbol: 'Rp.',
           decimalDigits: 0,
-        ).format(4700000),
+        ).format(summary),
         size: 24.sp,
         weight: FontWeight.w500,
       ),
