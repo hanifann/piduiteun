@@ -306,8 +306,8 @@ class _AddDataPageState extends State<AddDataPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
-            elevation: 0,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
           ),
           child: CustomTextWidget(
             text: selectedValue == SegmentedChoice.pengeluaran
@@ -315,7 +315,6 @@ class _AddDataPageState extends State<AddDataPage> {
                 : 'Tambah pemasukan',
             size: 14.sp,
             weight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       ),

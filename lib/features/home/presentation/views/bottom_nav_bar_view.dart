@@ -80,6 +80,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           context.pushNamed(
             'add_data',
@@ -91,7 +92,10 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           );
         },
         elevation: 2,
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
       ),
     );
   }
