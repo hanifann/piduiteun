@@ -8,6 +8,7 @@ import 'package:piduiteun/features/add_data/presentation/bloc/add_data_bloc.dart
 import 'package:piduiteun/features/add_data/presentation/widgets/textfield_with_title_widget.dart';
 import 'package:piduiteun/features/home/domain/entities/category.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
+import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/injection_container.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
@@ -128,6 +129,7 @@ class _AddDataPageState extends State<AddDataPage> {
             keteranganEditingController.clear();
             chipValue = null;
           });
+          context.read<HomeBloc>().add(GetExDataEvent());
         } else if (state is AddDataFailed){
           showDialog<String>(
             context: context, 
@@ -268,7 +270,9 @@ class _AddDataPageState extends State<AddDataPage> {
                 context.read<AddDataBloc>().add(
                   AddExDataEvent(
                     expenditure: Expenditure(
-                      expenditure: double.parse(nominalEditingController.text), 
+                      expenditure: int.parse(
+                        nominalEditingController.text.replaceAll('.', ''),
+                      ),
                       dateTime: dateTime, 
                       information: keteranganEditingController.text, 
                       time: timeEditingController.text, 
@@ -280,8 +284,10 @@ class _AddDataPageState extends State<AddDataPage> {
                 context.read<AddDataBloc>().add(
                   AddInDataEvent(
                     expenditure: Expenditure(
-                      expenditure: double.parse(nominalEditingController.text), 
-                      dateTime: DateTime.parse(dateEditingController.text), 
+                      expenditure: int.parse(
+                        nominalEditingController.text.replaceAll('.', ''),
+                      ),
+                      dateTime: dateTime, 
                       information: keteranganEditingController.text, 
                       time: timeEditingController.text, 
                       tag: chipValue!,
