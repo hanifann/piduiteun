@@ -102,15 +102,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Row summaryRowWidget() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InExContainerDataWidget(
+        const InExContainerDataWidget(
           title: 'Pengeluaran',
           money: 300000,
           isIncome: false,
         ),
-        InExContainerDataWidget(
+        SizedBox(width: 24.w,),
+        const InExContainerDataWidget(
           title: 'Pemasukan',
           money: 5000000,
           isIncome: true,
