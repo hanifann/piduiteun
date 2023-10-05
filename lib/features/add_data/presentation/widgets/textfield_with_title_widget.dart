@@ -50,7 +50,9 @@ class TextFieldWithTitleWidget extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 4.h, horizontal: 12.w,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(210, 215, 200, 1),
                     borderRadius: BorderRadius.circular(4.r),
