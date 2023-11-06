@@ -10,7 +10,7 @@ dependencies:
   bloc: ^8.1.2
   currency_text_input_formatter: ^2.1.10
   dartz: ^0.10.1
-  envied: ^0.3.0+3
+  envied: ^0.5.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter
