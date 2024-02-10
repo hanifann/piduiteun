@@ -17,6 +17,7 @@ import 'package:piduiteun/features/home/domain/usecases/get_in_data_usecase.dart
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
+import 'package:piduiteun/features/statistic/presentation/cubit/statistic_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -38,6 +39,7 @@ Future<void> init() async {
   //datasources
   final exBox = await Hive.openBox<Expenditure>('expenditure');
   final inBox = await Hive.openBox<Expenditure>('income');
+  
   sl.registerLazySingleton<AddDataLocalDataSource>(
   () => AddDataLocalDataSourceImpl(
     exBox: exBox, inBox: inBox,
@@ -63,4 +65,8 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeLocalDataSource>(
     () => HomeLocalDataSourceImpl(exBox: exBox, inBox: inBox),
   );
+
+  //statistic
+  //bloc
+  sl.registerFactory(() => StatisticCubit(inBox, exBox));
 }
