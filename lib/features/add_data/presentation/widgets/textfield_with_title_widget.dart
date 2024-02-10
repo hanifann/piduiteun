@@ -14,6 +14,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
     this.isCurrency = false,
     this.textInputType = TextInputType.text,
     this.isEnabled = true,
+    this.prefix,
     super.key,
   });
   final String title;
@@ -23,6 +24,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
   final bool isCurrency;
   final TextInputType textInputType;
   final bool isEnabled;
+  final Widget? prefix;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
                   symbol: '',
                 ),
           ],
+          style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(
               isCurrency ? 0.w : 12.w , 12.h, 12.w, 12.h,
@@ -58,30 +61,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
             filled: true,
             fillColor: const Color.fromRGBO(223, 228, 218, 1),
             hintText: hint,
-            prefix: Visibility(
-              visible: isCurrency ? true : false,
-              child: Container(
-                padding: EdgeInsets.only(left: 8.w),
-                margin: EdgeInsets.only(right: 8.w),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(223, 228, 218, 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    bottomLeft: Radius.circular(8.r),
-                  ),
-                ),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 4.h, horizontal: 12.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(210, 215, 200, 1),
-                    borderRadius: BorderRadius.circular(4.r),
-                  ),
-                  child: const Text('Rp.'),
-                ),
-              ),
-            ),
+            prefixIcon: prefix,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide.none,
