@@ -25,6 +25,12 @@ class Expenditure extends Equatable {
   final String tag;
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+    expenditure,
+    dateTime,
+    information,
+    time,
+    tag,
+  ];
   
 }
