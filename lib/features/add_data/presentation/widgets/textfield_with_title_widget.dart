@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_bool_literals_in_conditional_expressions
+
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,15 +35,34 @@ class TextFieldWithTitleWidget extends StatelessWidget {
           weight: FontWeight.w500,
         ),
         SizedBox(height: 4.h,),
-        Row(
-          children: [
-            Visibility(
-              // ignore: avoid_bool_literals_in_conditional_expressions
+        TextFormField(
+          autocorrect: false,
+          enabled: isEnabled,
+          keyboardType: textInputType,
+          controller: textEditingController,
+          validator: (value) => value == null || value.isEmpty ? 
+            errorMessage : 
+            null,
+          inputFormatters: [
+              if (isCurrency)
+                CurrencyTextInputFormatter(
+                  locale: 'id', 
+                  decimalDigits: 0,
+                  symbol: '',
+                ),
+          ],
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(
+              isCurrency ? 0.w : 12.w , 12.h, 12.w, 12.h,
+            ),
+            filled: true,
+            fillColor: const Color.fromRGBO(223, 228, 218, 1),
+            hintText: hint,
+            prefix: Visibility(
               visible: isCurrency ? true : false,
               child: Container(
                 padding: EdgeInsets.only(left: 8.w),
-                height: 58.h,
-                alignment: Alignment.center,
+                margin: EdgeInsets.only(right: 8.w),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(223, 228, 218, 1),
                   borderRadius: BorderRadius.only(
@@ -61,38 +82,11 @@ class TextFieldWithTitleWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Flexible(
-              child: TextFormField(
-                autocorrect: false,
-                enabled: isEnabled,
-                keyboardType: textInputType,
-                controller: textEditingController,
-                validator: (value) => value == null || value.isEmpty ? 
-                  errorMessage : 
-                  null,
-                inputFormatters: [
-                    if (isCurrency)
-                      CurrencyTextInputFormatter(
-                        locale: 'id', 
-                        decimalDigits: 0,
-                        symbol: '',
-                      ),
-                ],
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromRGBO(223, 228, 218, 1),
-                  hintText: hint,
-                  border: OutlineInputBorder(
-                    borderRadius: isCurrency ? BorderRadius.only(
-                      topRight: Radius.circular(8.r),
-                      bottomRight: Radius.circular(8.r),
-                    ) : BorderRadius.circular(8.r),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide.none,
             ),
-          ],
+          ),
         ),
       ],
     );
