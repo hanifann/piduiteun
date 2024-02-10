@@ -6,6 +6,7 @@ import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
+import 'package:piduiteun/features/statistic/presentation/views/statistic_view.dart';
 import 'package:piduiteun/injection_container.dart';
 
 class BottomNavBarView extends StatelessWidget {
@@ -42,9 +43,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   static const List<Widget> body = <Widget>[
     HomeView(),
-    Center(
-      child: Text('halaman 2'),
-    ),
+    StatisticView(),
     Center(
       child: Text('halaman 3'),
     ),
@@ -68,7 +67,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: currentPageIndex == 0 ? AppBar() : null,
       body: body[currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: navigatorDestination,
