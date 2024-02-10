@@ -38,8 +38,12 @@ class _AddDataPageState extends State<AddDataPage> {
   SegmentedChoice selectedValue = SegmentedChoice.pengeluaran;
   final keteranganEditingController = TextEditingController();
   final nominalEditingController = TextEditingController();
-  final dateEditingController = TextEditingController();
-  final timeEditingController = TextEditingController();
+  final dateEditingController = TextEditingController(
+    text: DateFormat('dd MMMM yyyy', 'id').format(DateTime.now()),
+  );
+  final timeEditingController = TextEditingController(
+    text: DateFormat('dd MMMM yyyy', 'id').format(DateTime.now()),
+  );
 
   final formKey = GlobalKey<FormState>();
 
@@ -61,6 +65,7 @@ class _AddDataPageState extends State<AddDataPage> {
     keteranganEditingController.dispose();
     nominalEditingController.dispose();
     dateEditingController.dispose();
+    timeEditingController.dispose();
     super.dispose();
   }
 
@@ -366,6 +371,27 @@ class _AddDataPageState extends State<AddDataPage> {
       isCurrency: true,
       textInputType: TextInputType.number,
       hint: 'Contoh. 500000',
+      prefix: Container(
+        padding: EdgeInsets.all(8.w),
+        margin: EdgeInsets.only(right: 8.w),
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(223, 228, 218, 1),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8.r),
+            bottomLeft: Radius.circular(8.r),
+          ),
+        ),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 4.h, horizontal: 12.w,
+          ),
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(210, 215, 200, 1),
+            borderRadius: BorderRadius.circular(4.r),
+          ),
+          child: const Text('Rp.'),
+        ),
+      ),
     );
   }
 
