@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:piduiteun/core/utils/extensions/string_extension.dart';
 import 'package:piduiteun/features/home/domain/entities/segmented_choice.dart';
 import 'package:piduiteun/features/home/presentation/bloc/home_bloc.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/features/statistic/presentation/cubit/statistic_cubit.dart';
+import 'package:piduiteun/features/statistic/presentation/widgets/dropwodn_time_interval_widget.dart';
 import 'package:piduiteun/injection_container.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatisticView extends StatelessWidget {
   const StatisticView({super.key});
@@ -29,19 +32,87 @@ class StatisticPage extends StatefulWidget {
 
 class _StatisticPageState extends State<StatisticPage> {
   SegmentedChoice selectedSegmented = SegmentedChoice.pengeluaran;
+  final dropwownController = TextEditingController();
+
+  TimeIntervals selectedInterval = TimeIntervals.monthly;
+
+  final List<ChartData> chartData = [
+            ChartData('David', 25),
+            ChartData('Steve', 38),
+            ChartData('Jack', 34),
+            ChartData('Others', 52)
+        ];
     
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      body: ListView(
-        padding: EdgeInsets.all(16.r),
-        children: [
-          statisticSummaryBlocBuilderWidget(),
-          SizedBox(height: 16.h,),
-          catagorySegmentedBtnWidget(),
-        ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          intervalToEvent(selectedInterval);
+        },
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
+          children: [
+            titleRowWidget(context),
+            SizedBox(height: 8.h,),
+            statisticSummaryBlocBuilderWidget(),
+            SizedBox(height: 16.h,),
+            catagorySegmentedBtnWidget(),
+            SizedBox(height: 16.h,),
+            subtitleWidget(
+              context, 
+              'Kategori ${selectedSegmented.name.toCapitalizeEachWords()}',
+            ),
+            SizedBox(height: 16.h,),
+            BlocBuilder<StatisticCubit, StatisticState>(
+              builder: (context, state) {
+                if(state is StatisticLoaded){
+                  return SfCircularChart(
+                    series: [
+                      // Render pie chart
+
+                    ]
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Text subtitleWidget(BuildContext context, String subtitle) {
+    return Text(
+      subtitle,
+      style: Theme.of(context).textTheme.titleMedium,
+    );
+  }
+
+  Row titleRowWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Rangkuman',
+          style: Theme.of(context).textTheme.titleLarge!
+            .copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+        ),
+        DropdownTimeIntervalWidget(
+          controller: dropwownController, 
+          onSelected: (interval) {
+            setState(() {
+              selectedInterval = interval!;
+            });
+            intervalToEvent(selectedInterval);
+          },
+        ),
+      ],
     );
   }
 
@@ -61,7 +132,8 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  BlocBuilder<StatisticCubit, StatisticState> statisticSummaryBlocBuilderWidget() {
+  BlocBuilder<StatisticCubit, StatisticState> 
+    statisticSummaryBlocBuilderWidget() {
     return BlocBuilder<StatisticCubit, StatisticState>(
       builder: (context, state) {
         if(state is StatisticLoaded){
@@ -144,4 +216,21 @@ class _StatisticPageState extends State<StatisticPage> {
       ),
     );
   }
+
+  void intervalToEvent(TimeIntervals intervals) {
+    if (intervals.value == 'Perminggu') {
+      context.read<StatisticCubit>().getWeeklyStatistic();
+    } else if (intervals.value == 'Perbulan') {
+      context.read<StatisticCubit>().getMonthlyStatistic();
+    } else {
+      context.read<StatisticCubit>().getYearlyStatistic();
+    }
+  }
 }
+
+class ChartData {
+        ChartData(this.x, this.y, [this.color]);
+        final String x;
+        final double y;
+        final Color? color;
+    }

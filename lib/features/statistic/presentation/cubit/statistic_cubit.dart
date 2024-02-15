@@ -16,20 +16,35 @@ class StatisticCubit extends Cubit<StatisticState> {
 
     emit(StatisticLoading());
 
-    final inMonthly = income.values.where(
+    final inMonthlyList = income.values.where(
       (element) => element.dateTime.year == year,
-    ).fold(0, (previousValue, element) => previousValue+element.expenditure);
+    ).toList();
 
-    final exMonthly = expense.values.where(
+    final inMonthly = inMonthlyList.fold(
+      0, (previousValue, element) => previousValue+element.expenditure,
+    );
+
+    final exMonthlyList = expense.values.where(
       (element) => element.dateTime.year == year,
-    ).fold(0, (previousValue, element) => previousValue+element.expenditure);
+    ).toList();
 
-    emit(StatisticLoaded(income: inMonthly, expense: exMonthly));
+    final exMonthly = exMonthlyList.fold(
+      0, (previousValue, element) => previousValue+element.expenditure,
+    );
+
+    emit(
+      StatisticLoaded(
+        income: inMonthly, 
+        expense: exMonthly,
+      ),
+    );
   }
 
   void getMonthlyStatistic() {
     final month = DateTime.now().month;
+
     emit(StatisticLoading());
+
     final inMonthly = income.values.where(
       (element) => element.dateTime.month == month,
     ).fold(0, (previousValue, element) => previousValue+element.expenditure);
@@ -38,7 +53,12 @@ class StatisticCubit extends Cubit<StatisticState> {
       (element) => element.dateTime.month == month,
     ).fold(0, (previousValue, element) => previousValue+element.expenditure);
 
-    emit(StatisticLoaded(income: inMonthly, expense: exMonthly));
+    emit(
+      StatisticLoaded(
+        income: inMonthly, 
+        expense: exMonthly,
+      ),
+    );
   }
 
   void getWeeklyStatistic() {
@@ -57,7 +77,12 @@ class StatisticCubit extends Cubit<StatisticState> {
         element.dateTime.isBefore(currentData),
     ).fold(0, (previousValue, element) => previousValue+element.expenditure);
 
-    emit(StatisticLoaded(income: inMonthly, expense: exMonthly));
+    emit(
+      StatisticLoaded(
+        income: inMonthly, 
+        expense: exMonthly,
+      ),
+    );
 
   }
 

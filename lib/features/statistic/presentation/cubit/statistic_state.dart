@@ -10,7 +10,11 @@ sealed class StatisticState extends Equatable {
 final class StatisticInitial extends StatisticState {}
 
 final class StatisticLoaded extends StatisticState {
-  const StatisticLoaded({required this.income, required this.expense});
+  const StatisticLoaded({
+    required this.income, 
+    required this.expense, 
+  });
+
 
   final int income;
   final int expense;
