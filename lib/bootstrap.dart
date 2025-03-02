@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:piduiteun/features/add_data/domain/entities/expenditure.dart';
 import 'package:piduiteun/injection_container.dart';
 
@@ -36,5 +37,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   Hive.registerAdapter<Expenditure>(ExpenditureAdapter());
   await init();
 
+  await findSystemLocale();
   runApp(await builder());
 }
