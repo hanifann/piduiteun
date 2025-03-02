@@ -1,4 +1,39 @@
 {
     "@@locale": "id",
-    "balance": "Saldo Bulan "
+    "balance": "Saldo Bulan ",
+    "expenses": "Pengeluaran",
+    "income": "Pemasukan",
+    "latestTransaction": "Transaksi terbaru",
+    "description": "Keterangan",
+    "date": "Tanggal",
+    "category": "Kategori",
+    "food": "Makanan",
+    "transportation": "Transportasi",
+    "entertainment": "Hiburan",
+    "bills": "Tagihan",
+    "etc": "Lain-lain",
+    "eg": "Contoh.",
+    "time": "Waktu",
+    "back": "Kembali",
+    "summary": "Rangkuman",
+    "weekly": "Perminggu",
+    "monthly": "Perbulan",
+    "yearly": "Pertahun",
+    "spent": "Anda telah menghabiskan",
+    "yourIncome": "dan pemasukan anda",
+
+    "homeNavbarTitle": "Beranda",
+    "statisticNavbarTitle": "Statistik",
+    "transactionNavbarTitle": "Transaksi",
+    "addDataAppBarTitle": "Tambah data",
+    "monthStatisticsAppBarTitle": "Statistik bulan",
+
+    "addBtnText": "Tambah",
+
+    "descriptionErrorMessage": "Keterangan tidak boleh kosong",
+    "nominalErrorMessage": "Nominal todak boleh kosong",
+    "dateErrorMessage": "Tanggal todak boleh kosong",
+    "timeErrorMessage": "Waktu todak boleh kosong",
+    "genericErrorMessage": "Terjadi kesalahan",
+    "categoryErrorMessage": "Anda belum memilih kategori"
 }

@@ -1,1 +1,1 @@
-enum SegmentedChoice{pengeluaran, pemasukan}
+enum SegmentedChoice{expense, income}

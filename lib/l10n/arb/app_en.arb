@@ -1,4 +1,39 @@
 {
     "@@locale": "en",
-    "balance": "Balance in "
+    "balance": "Balance in ",
+    "expenses": "Expenses",
+    "income": "Income",
+    "latestTransaction": "Latest transaction",
+    "description": "Description",
+    "date": "Date",
+    "category": "Category",
+    "food": "Food",
+    "transportation": "Transportation",
+    "entertainment": "Entertainment",
+    "bills": "Bills",
+    "etc": "etc",
+    "eg": "E.g.",
+    "time": "Time",
+    "back": "Back",
+    "summary": "Summary",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "spent": "You have spent",
+    "yourIncome": "and your income",
+
+    "homeNavbarTitle": "Home",
+    "statisticNavbarTitle": "Statistic",
+    "transactionNavbarTitle": "Transaction",
+    "addDataAppBarTitle": "Add new data",
+    "monthStatisticsAppBarTitle": "Statistic in",
+
+    "addBtnText": "Add",
+
+    "descriptionErrorMessage": "Description cannot be empty",
+    "nominalErrorMessage": "Nominal cannot be empty",
+    "dateErrorMessage": "Date cannot be empty",
+    "timeErrorMessage": "Time cannot be empty",
+    "genericErrorMessage": "Something went wrong",
+    "categoryErrorMessage": "You have not selected a category"
 }

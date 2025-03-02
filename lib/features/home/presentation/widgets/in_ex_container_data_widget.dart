@@ -43,7 +43,7 @@ class InExContainerDataWidget extends StatelessWidget {
               CustomTextWidget(
                 text: NumberFormat.currency(
                   locale: 'id',
-                  symbol: 'Rp.',
+                  symbol: 'Rp. ',
                   decimalDigits: 0,
                 ).format(money),
                 weight: FontWeight.w600,

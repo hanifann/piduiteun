@@ -42,7 +42,7 @@ class TransactionContainerWidget extends StatelessWidget {
               weight: FontWeight.w500,
             ),
             CustomTextWidget(
-              text: DateFormat('dd MMMM yyyy', 'id').format(dateTime),
+              text: DateFormat('dd MMMM yyyy').format(dateTime),
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           ],
@@ -51,7 +51,7 @@ class TransactionContainerWidget extends StatelessWidget {
         CustomTextWidget(
           text: NumberFormat.currency(
             locale: 'id',
-            symbol: 'Rp.',
+            symbol: 'Rp. ',
             decimalDigits: 0,
           ).format(value),
           size: 14.sp,

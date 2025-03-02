@@ -13,6 +13,7 @@ import 'package:piduiteun/features/home/presentation/cubit/in_ex_summary_cubit.d
 import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/injection_container.dart';
+import 'package:piduiteun/l10n/l10n.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
 
 class AddDataView extends StatelessWidget {
@@ -35,14 +36,14 @@ class AddDataPage extends StatefulWidget {
 }
 
 class _AddDataPageState extends State<AddDataPage> {
-  SegmentedChoice selectedValue = SegmentedChoice.pengeluaran;
+  SegmentedChoice selectedValue = SegmentedChoice.expense;
   final keteranganEditingController = TextEditingController();
   final nominalEditingController = TextEditingController();
   final dateEditingController = TextEditingController(
-    text: DateFormat('dd MMMM yyyy', 'id').format(DateTime.now()),
+    text: DateFormat('dd MMMM yyyy').format(DateTime.now()),
   );
   final timeEditingController = TextEditingController(
-    text: DateFormat('dd MMMM yyyy', 'id').format(DateTime.now()),
+    text: DateFormat('dd MMMM yyyy').format(DateTime.now()),
   );
 
   final formKey = GlobalKey<FormState>();
@@ -54,9 +55,9 @@ class _AddDataPageState extends State<AddDataPage> {
   @override
   void initState() {
     dateEditingController.text =
-        DateFormat('dd MMMM yyyy', 'id').format(DateTime.now());
+        DateFormat('dd MMMM yyyy').format(DateTime.now());
     timeEditingController.text =
-        DateFormat('HH:mm', 'id').format(DateTime.now());
+        DateFormat('HH:mm').format(DateTime.now());
     super.initState();
   }
 
@@ -73,7 +74,7 @@ class _AddDataPageState extends State<AddDataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah data'),
+        title: Text(context.l10n.addDataAppBarTitle),
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 24.h),
@@ -94,7 +95,7 @@ class _AddDataPageState extends State<AddDataPage> {
               dateAndTimeRowWidget(context),
               SizedBox(height: 16.h),
               kategoriTextWidget(),
-              if (selectedValue == SegmentedChoice.pengeluaran)
+              if (selectedValue == SegmentedChoice.expense)
                 categoryExWrapWidget(context)
               else
                 categoryInWrapWidget(context),
@@ -204,7 +205,7 @@ class _AddDataPageState extends State<AddDataPage> {
 
   CustomTextWidget kategoriTextWidget() {
     return CustomTextWidget(
-      text: 'Kategori',
+      text: context.l10n.category,
       size: 14.sp,
       weight: FontWeight.w500,
     );
@@ -227,22 +228,27 @@ class _AddDataPageState extends State<AddDataPage> {
     );
   }
 
-  GestureDetector selectTimeGestureDetectorWidget(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-          initialEntryMode: TimePickerEntryMode.inputOnly,
-        ).then((value) {
-          if (value != null) {
-            setState(() {
-              timeEditingController.text = value.format(context);
-            });
-          }
-        });
-      },
-      child: timeTextfieldWidget(),
+  MediaQuery selectTimeGestureDetectorWidget(BuildContext context) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        alwaysUse24HourFormat: true,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.inputOnly,
+          ).then((value) {
+            if (value != null) {
+              setState(() {
+                timeEditingController.text = value.format(context);
+              });
+            }
+          });
+        },
+        child: timeTextfieldWidget(),
+      ),
     );
   }
 
@@ -258,7 +264,7 @@ class _AddDataPageState extends State<AddDataPage> {
           if (value != null) {
             setState(() {
               dateEditingController.text =
-                  DateFormat('dd MMMM yyyy', 'id').format(value);
+                  DateFormat('dd MMMM yyyy').format(value);
               dateTime = value;
             });
           }
@@ -280,12 +286,12 @@ class _AddDataPageState extends State<AddDataPage> {
                 context: context, 
                 builder: (_){
                   return AlertDialog(
-                    title: const Text('Terjadi kesalahan'),
-                    content: const Text('Anda belum memilih kategori'),
+                    title: Text(context.l10n.genericErrorMessage),
+                    content: Text(context.l10n.categoryErrorMessage),
                     actions: [
                       GestureDetector(
                         onTap: ()=> context.pop(),
-                        child: const Text('Kembali'),
+                        child: Text(context.l10n.back),
                       ),
                     ],
                   );
@@ -293,7 +299,7 @@ class _AddDataPageState extends State<AddDataPage> {
               );
             }
             if(formKey.currentState!.validate()){
-              if(selectedValue == SegmentedChoice.pengeluaran){
+              if(selectedValue == SegmentedChoice.expense){
                 context.read<AddDataBloc>().add(
                   AddExDataEvent(
                     expenditure: Expenditure(
@@ -332,9 +338,9 @@ class _AddDataPageState extends State<AddDataPage> {
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
           ),
           child: CustomTextWidget(
-            text: selectedValue == SegmentedChoice.pengeluaran
-                ? 'Tambah pengeluaran'
-                : 'Tambah pemasukan',
+            text: selectedValue == SegmentedChoice.expense
+                ? '${context.l10n.addBtnText} ${context.l10n.expenses}'
+                : '${context.l10n.addBtnText} ${context.l10n.income}',
             size: 14.sp,
             weight: FontWeight.w500,
           ),
@@ -345,9 +351,9 @@ class _AddDataPageState extends State<AddDataPage> {
 
   TextFieldWithTitleWidget timeTextfieldWidget() {
     return TextFieldWithTitleWidget(
-      title: 'Waktu',
+      title: context.l10n.time,
       textEditingController: timeEditingController,
-      errorMessage: 'Waktu todak boleh kosong',
+      errorMessage: context.l10n.timeErrorMessage,
       hint: DateFormat('HH:mm', 'id').format(DateTime.now()),
       isEnabled: false,
     );
@@ -355,10 +361,10 @@ class _AddDataPageState extends State<AddDataPage> {
 
   TextFieldWithTitleWidget dateTextfieldWidget() {
     return TextFieldWithTitleWidget(
-      title: 'Tanggal',
+      title: context.l10n.date,
       textEditingController: dateEditingController,
-      errorMessage: 'Tanggal todak boleh kosong',
-      hint: DateFormat('dd MMMM yyyy', 'id').format(DateTime.now()),
+      errorMessage: context.l10n.dateErrorMessage,
+      hint: DateFormat('dd MMMM yyyy').format(DateTime.now()),
       isEnabled: false,
     );
   }
@@ -367,10 +373,10 @@ class _AddDataPageState extends State<AddDataPage> {
     return TextFieldWithTitleWidget(
       title: 'Nominal',
       textEditingController: nominalEditingController,
-      errorMessage: 'Nominal todak boleh kosong',
+      errorMessage: context.l10n.nominalErrorMessage,
       isCurrency: true,
       textInputType: TextInputType.number,
-      hint: 'Contoh. 500000',
+      hint: '${context.l10n.eg} 500000',
       prefix: Container(
         padding: EdgeInsets.all(8.w),
         margin: EdgeInsets.only(right: 8.w),
@@ -389,7 +395,7 @@ class _AddDataPageState extends State<AddDataPage> {
             color: const Color.fromRGBO(210, 215, 200, 1),
             borderRadius: BorderRadius.circular(4.r),
           ),
-          child: const Text('Rp.'),
+          child: const Text('Rp. '),
         ),
       ),
     );
@@ -397,10 +403,10 @@ class _AddDataPageState extends State<AddDataPage> {
 
   TextFieldWithTitleWidget keteranganTextfieldWidget() {
     return TextFieldWithTitleWidget(
-      title: 'Keterangan',
+      title: context.l10n.description,
       textEditingController: keteranganEditingController,
-      errorMessage: 'Keterangan tidak boleh kosong',
-      hint: 'Contoh. Ayam geprek',
+      errorMessage: context.l10n.descriptionErrorMessage,
+      hint: '${context.l10n.eg} Ayam geprek',
     );
   }
 

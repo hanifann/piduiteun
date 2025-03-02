@@ -3,6 +3,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
 
 class TextFieldWithTitleWidget extends StatelessWidget {
@@ -46,12 +47,14 @@ class TextFieldWithTitleWidget extends StatelessWidget {
             errorMessage : 
             null,
           inputFormatters: [
-              if (isCurrency)
-                CurrencyTextInputFormatter(
+            if (isCurrency)
+              CurrencyTextInputFormatter(
+                NumberFormat.currency(
                   locale: 'id', 
                   decimalDigits: 0,
                   symbol: '',
                 ),
+              ),
           ],
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(

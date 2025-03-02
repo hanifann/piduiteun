@@ -10,6 +10,7 @@ import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/widgets/category_segmented_btn_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/in_ex_container_data_widget.dart';
 import 'package:piduiteun/features/home/presentation/widgets/transaction_container_widget.dart';
+import 'package:piduiteun/l10n/l10n.dart';
 import 'package:piduiteun/widgets/text_widget.dart';
 
 class HomeView extends StatelessWidget {
@@ -29,7 +30,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SegmentedChoice selectedSegmented = SegmentedChoice.pengeluaran;
+  SegmentedChoice selectedSegmented = SegmentedChoice.expense;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           selectedSegmented = value.first;
         });
-        if(selectedSegmented == SegmentedChoice.pengeluaran){
+        if(selectedSegmented == SegmentedChoice.expense){
           context.read<HomeBloc>().add(GetExDataEvent());
         } else {
           context.read<HomeBloc>().add(GetInDataEvent());
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
 
   CustomTextWidget lastTransTextWidget() {
     return CustomTextWidget(
-      text: 'Transaksi terakhir',
+      text: context.l10n.latestTransaction,
       size: 16.sp,
       weight: FontWeight.w500,
     );
@@ -137,16 +138,20 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InExContainerDataWidget(
-          title: 'Pengeluaran',
-          money: expense,
-          isIncome: false,
+        Expanded(
+          child: InExContainerDataWidget(
+            title: context.l10n.expenses,
+            money: expense,
+            isIncome: false,
+          ),
         ),
         SizedBox(width: 24.w,),
-        InExContainerDataWidget(
-          title: 'Pemasukan',
-          money: income,
-          isIncome: true,
+        Expanded(
+          child: InExContainerDataWidget(
+            title: context.l10n.income,
+            money: income,
+            isIncome: true,
+          ),
         ),
       ],
     );
@@ -157,7 +162,7 @@ class _HomePageState extends State<HomePage> {
       child: CustomTextWidget(
         text: NumberFormat.currency(
           locale: 'id',
-          symbol: 'Rp.',
+          symbol: 'Rp. ',
           decimalDigits: 0,
         ).format(summary),
         size: 24.sp,
@@ -172,7 +177,7 @@ class _HomePageState extends State<HomePage> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Saldo bulan',
+              text: context.l10n.balance,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
@@ -180,7 +185,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             TextSpan(
-              text: DateFormat(' MMMM', 'id').format(DateTime.now()),
+              text: DateFormat(' MMMM').format(DateTime.now()),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,

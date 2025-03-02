@@ -8,6 +8,7 @@ import 'package:piduiteun/features/home/presentation/cubit/summary_cubit.dart';
 import 'package:piduiteun/features/home/presentation/views/home_view.dart';
 import 'package:piduiteun/features/statistic/presentation/views/statistic_view.dart';
 import 'package:piduiteun/injection_container.dart';
+import 'package:piduiteun/l10n/l10n.dart';
 
 class BottomNavBarView extends StatelessWidget {
   const BottomNavBarView({super.key});
@@ -49,23 +50,23 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     ),
   ];
 
-  static const List<NavigationDestination> navigatorDestination = [
-    NavigationDestination(
-      icon: Icon(Symbols.home_rounded),
-      label: 'Beranda',
-    ),
-    NavigationDestination(
-      icon: Icon(Symbols.analytics_rounded),
-      label: 'Statistik',
-    ),
-    NavigationDestination(
-      icon: Icon(Symbols.receipt_long_rounded),
-      label: 'Transaksi',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final navigatorDestination = [
+      NavigationDestination(
+        icon: const Icon(Symbols.home_rounded),
+        label: context.l10n.homeNavbarTitle,
+      ),
+      NavigationDestination(
+        icon: const Icon(Symbols.analytics_rounded),
+        label: context.l10n.statisticNavbarTitle,
+      ),
+      NavigationDestination(
+        icon: const Icon(Symbols.receipt_long_rounded),
+        label: context.l10n.transactionNavbarTitle,
+      ),
+    ];
+    
     return Scaffold(
       appBar: currentPageIndex == 0 ? AppBar() : null,
       body: body[currentPageIndex],

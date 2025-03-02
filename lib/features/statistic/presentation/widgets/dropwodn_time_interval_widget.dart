@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:piduiteun/core/utils/extensions/enum_extension.dart';
 
 enum TimeIntervals {
-  weekly('Perminggu'),
-  monthly('Perbulan'),
-  yearly('Pertahun');
-
-  const TimeIntervals(this.value);
-  final String value;
+  weekly,
+  monthly,
+  yearly;
 }
 
 class DropdownTimeIntervalWidget extends StatelessWidget {
@@ -30,7 +28,7 @@ class DropdownTimeIntervalWidget extends StatelessWidget {
           (TimeIntervals intervals) {
             return DropdownMenuEntry<TimeIntervals>(
               value: intervals, 
-              label: intervals.value,
+              label: intervals.getLabel(context),
             );
           }
       ).toList(),
